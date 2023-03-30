@@ -11,7 +11,7 @@ Piece
 
 Board
 -------------------
-
+Board() - Consturctor which will initalize the board. Will set up pieces by creating a piece array of 8x8
 
 
 
