@@ -1,38 +1,42 @@
 package checkersgame;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author bradl
  */
 public class Board 
 {    
-    private Piece[][] pieces;
+    private ArrayList<Piece> pieces;
+    private int dimension;
     
-    public Board()
+    public Board(int size)
     {
-        populateBoard(8);
+        this.dimension = size;
+        populateBoard(size);
     }
     
     private void populateBoard(int dimension)
     {
-        this.pieces = new Piece[dimension][dimension];
+        this.pieces = new ArrayList<Piece>();
         for(int y = 0; y < 3; y++)
         {
             for(int x = 0; x < dimension; x++)
             {
                 if(y == 0 || y == 2)
                 {
-                    pieces[x++][y] = new Piece(Colour.RED, Rank.PAWN, 
-                        new Point(x, y));
+                    pieces.add(new Piece(Colour.RED, Rank.PAWN, 
+                        new Point(x, y)));
                 }
                 else
                 {
                     if(x++ >= dimension)
                         continue;
                     
-                    pieces[x][y] = new Piece(Colour.RED, Rank.PAWN,
-                        new Point(x, y));
+                    pieces.add(new Piece(Colour.BLACK, Rank.PAWN,
+                        new Point(x, y)));
                 }
             }
         }
@@ -43,16 +47,16 @@ public class Board
             {
                 if(y == 7 || y == 5)
                 {
-                    pieces[x++][y] = new Piece(Colour.BLACK, Rank.PAWN, 
-                        new Point(x, y));
+                    pieces.add(new Piece(Colour.BLACK, Rank.PAWN, 
+                        new Point(x, y)));
                 }
                 else
                 {
                     if(x++ >= dimension)
                         continue;
                     
-                    pieces[x][y] = new Piece(Colour.BLACK, Rank.PAWN,
-                        new Point(x, y));
+                    pieces.add(new Piece(Colour.BLACK, Rank.PAWN,
+                        new Point(x, y)));
                 }
             }
         }      
@@ -60,20 +64,19 @@ public class Board
     
     public Piece getPiece(int ID)
     {
-        for(int x = 0; x < pieces.length; x++)
+        Iterator it = this.pieces.iterator();
+        
+        while(it.hasNext())
         {
-            for(int y = 0; y < pieces[x].length; y++)
-            {
-                if(pieces[x][y] != null && pieces[x][y].getID() == ID)
-                {
-                    return pieces[x][y];
-                }
-            }
+            Piece p = (Piece) it.next();
+            
+            if(p.getID() == ID)
+                return p;
         }
         return null; 
     }
 
-    public Piece[][] getPieces()
+    public ArrayList<Piece> getPieces()
     {
         return this.pieces;
     }
@@ -82,10 +85,10 @@ public class Board
     {
         
     }
-    public Boolean canJump()
-    {
-        
-        return false;
+    
+    public Point canJump(Piece piece)
+    {   
+        return null;
     }
     
     public Boolean canMove()
@@ -93,32 +96,38 @@ public class Board
         return false;
     }
     
-    public Boolean validMove(int ID, Movement y, Movement x)
+    public Point validMove(int ID, Point p)
     {
         Piece current = this.getPiece(ID);
-        if(current == null)
-            return false;
-        if(current.position.x + x.value >= 0 && current.position.x < pieces.length)
+
+        if(p.x >= 0 && p.y < dimension)
         {
-            if(current.position.y + y.value >= 0 && current.position.y < pieces.length)
+            for(Piece piece : pieces)
             {
-                if()
+                if(piece.getPos() == p)
+                {
+                    Point jumpPos = canJump(piece);
+                    
+                    if(jumpPos != null)
+                        return jumpPos;
+                    
+                    return null;
+                }               
+                return p;
             }
         }      
-        return false;
+        return null;
     }
     
     public void removePiece(int ID)
     {
-        for(int x = 0; x < pieces.length; x++)
+        Iterator it = pieces.iterator();
+        
+        while(it.hasNext())
         {
-            for(int y = 0; y < pieces[x].length; y++)
-            {
-                if(pieces[x][y] != null && pieces[x][y].getID() == ID)
-                {
-                    pieces[x][y] = null;
-                }
-            }
+            Piece p = (Piece)it.next();
+            if(p.getID() == ID)
+                it.remove();
         }
     }
     
@@ -126,15 +135,51 @@ public class Board
     {
         int count = 0;
         
-        for(int x = 0; x < pieces.length; x++)
+        Iterator it = pieces.iterator();
+        while(it.hasNext())
         {
-            for(int y = 0; y < pieces[x].length; y++)
-            {
-                if(pieces[x][y] != null && pieces[x][y].getColour() == colour)
-                    count++;
-            }
+            Piece p = (Piece)it.next();
+            if(p.getColour() == colour)
+                count++;
         }
         
         return count;
+    }
+    
+    public ArrayList<Point> getMoves(int ID)
+    {
+        Piece piece = this.getPiece(ID);
+        Point currentPos = piece.getPos();
+        
+        ArrayList<Point> moves = new ArrayList<Point>();
+        
+        Iterator it = pieces.iterator();
+        
+        
+        if(piece.getRank() == Rank.PAWN)
+        {
+            Point p1 = new Point(currentPos.x + Movement.LEFT.value, 
+                    currentPos.y + Movement.FORWARD.value * piece.direction);
+            Point p2 = new Point(currentPos.x + Movement.RIGHT.value, 
+                    currentPos.y + Movement.FORWARD.value * piece.direction);
+            moves.add(p1);
+            moves.add(p2);        
+        }
+        else
+        {
+            Point p1 = new Point(currentPos.x + Movement.LEFT.value, 
+                    currentPos.y + Movement.FORWARD.value * piece.direction);
+            Point p2 = new Point(currentPos.x + Movement.RIGHT.value, 
+                    currentPos.y + Movement.FORWARD.value * piece.direction);
+            Point p3 = new Point(currentPos.x + Movement.LEFT.value, 
+                    currentPos.y + Movement.BACK.value);
+            Point p4 = new Point(currentPos.x + Movement.RIGHT.value, 
+                    currentPos.y + Movement.BACK.value);
+            moves.add(p1);
+            moves.add(p2);  
+            moves.add(p3);
+            moves.add(p4);
+        }
+        return moves;
     }
 }
