@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class Board 
 {    
-    private ArrayList<Piece> pieces;
+    public ArrayList<Piece> pieces;
     private int dimension;
     
     public Board(int size)
@@ -86,7 +86,7 @@ public class Board
         
     }
     
-    public Point canJump(Piece piece)
+    public Point canJump(Piece p)
     {   
         return null;
     }
@@ -119,6 +119,24 @@ public class Board
         return null;
     }
     
+    public ArrayList<Point> filterMoves(ArrayList<Point> rawMoves)
+    {
+        Point lastPoint;
+        for(Point p : rawMoves)
+        {
+            for(Piece piece : pieces)
+            {
+                if(piece.position == p)
+                {
+                    
+                }
+            }
+            
+            lastPoint = p;
+        }
+        return rawMoves;
+    }
+    
     public void removePiece(int ID)
     {
         Iterator it = pieces.iterator();
@@ -149,37 +167,42 @@ public class Board
     public ArrayList<Point> getMoves(int ID)
     {
         Piece piece = this.getPiece(ID);
-        Point currentPos = piece.getPos();
         
         ArrayList<Point> moves = new ArrayList<Point>();
         
-        Iterator it = pieces.iterator();
-        
-        
-        if(piece.getRank() == Rank.PAWN)
+        Point tempPos = piece.position;
+
+        while(++tempPos.x < dimension)
         {
-            Point p1 = new Point(currentPos.x + Movement.LEFT.value, 
-                    currentPos.y + Movement.FORWARD.value * piece.direction);
-            Point p2 = new Point(currentPos.x + Movement.RIGHT.value, 
-                    currentPos.y + Movement.FORWARD.value * piece.direction);
-            moves.add(p1);
-            moves.add(p2);        
+            while(++tempPos.y < dimension)
+            {
+                moves.add(tempPos);
+            }
         }
-        else
+        while(++tempPos.x < dimension)
         {
-            Point p1 = new Point(currentPos.x + Movement.LEFT.value, 
-                    currentPos.y + Movement.FORWARD.value * piece.direction);
-            Point p2 = new Point(currentPos.x + Movement.RIGHT.value, 
-                    currentPos.y + Movement.FORWARD.value * piece.direction);
-            Point p3 = new Point(currentPos.x + Movement.LEFT.value, 
-                    currentPos.y + Movement.BACK.value);
-            Point p4 = new Point(currentPos.x + Movement.RIGHT.value, 
-                    currentPos.y + Movement.BACK.value);
-            moves.add(p1);
-            moves.add(p2);  
-            moves.add(p3);
-            moves.add(p4);
+            while(--tempPos.y < dimension)
+            {
+                moves.add(tempPos);
+            }
         }
+        while(--tempPos.x < dimension)
+        {
+            while(++tempPos.y < dimension)
+            {
+                moves.add(tempPos);
+            }
+        }
+        while(--tempPos.x < dimension)
+        {
+            while(--tempPos.y < dimension)
+            {
+                moves.add(tempPos);
+            }
+        }   
+        
+        moves = this.filterMoves(moves);
+        
         return moves;
     }
 }
