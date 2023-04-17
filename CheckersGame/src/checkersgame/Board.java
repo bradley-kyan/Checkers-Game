@@ -136,16 +136,51 @@ public class Board
     public ArrayList<Point> filterMoves(ArrayList<Point> rawMoves, Piece originPiece)
     {
         Point lastPoint = null;
+        ArrayList<Point> filteredPoints = new ArrayList<Point>();
+        
+        boolean sameAxisContinue = false;
+        
         for(Point p : rawMoves)
         {
-            for(Piece piece : pieces)
+            if(this.getPiece(p) != null)
             {
-                if(piece.position == p)
+                if(lastPoint != null && Math.round(lastPoint.distance(p)) == 1)
                 {
-                    if(lastPoint != null && Math.round(lastPoint.distance(p)) == 1)
+                    if(sameAxisContinue == true)
+                        continue;
+                    
+                    if(this.getPiece(lastPoint) != null)
                     {
-                        
+                        sameAxisContinue = true;
+                        lastPoint = p;
+                        continue;
                     }
+                }
+                else
+                {
+                    sameAxisContinue = false;   
+                }
+            }
+            else
+            {
+                if(lastPoint != null && Math.round(lastPoint.distance(p)) != 1)
+                {
+                    sameAxisContinue = false;
+                    lastPoint = p;
+                    continue;
+                }
+                
+                if(sameAxisContinue == true)                
+                {
+                    lastPoint = p;
+                    continue;
+                }
+                
+                if(this.getPiece(lastPoint) != null)
+                {
+                    sameAxisContinue = true;
+                    filteredPoints.addAll(this.getMoves(p));
+                    filteredPoints.add(p);
                 }
             }
             
@@ -183,8 +218,16 @@ public class Board
     
     public ArrayList<Point> getMoves(int ID)
     {
-        Piece piece = this.getPiece(ID);
-        
+        return this.getMoves(this.getPiece(ID));
+    }
+    
+    public ArrayList<Point> getMoves(Point point)
+    {
+        return this.getMoves(this.getPiece(point));
+    }
+    
+    private ArrayList<Point> getMoves(Piece piece)
+    {
         ArrayList<Point> moves = new ArrayList<Point>();
         
         Point tempPos = piece.position;
