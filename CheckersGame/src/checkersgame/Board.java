@@ -75,6 +75,20 @@ public class Board
         }
         return null; 
     }
+        
+    public Piece getPiece(Point point)
+    {
+        Iterator it = this.pieces.iterator();
+        
+        while(it.hasNext())
+        {
+            Piece p = (Piece) it.next();
+            
+            if(p.position.equals(point))
+                return p;
+        }
+        return null; 
+    }
 
     public ArrayList<Piece> getPieces()
     {
@@ -119,16 +133,19 @@ public class Board
         return null;
     }
     
-    public ArrayList<Point> filterMoves(ArrayList<Point> rawMoves)
+    public ArrayList<Point> filterMoves(ArrayList<Point> rawMoves, Piece originPiece)
     {
-        Point lastPoint;
+        Point lastPoint = null;
         for(Point p : rawMoves)
         {
             for(Piece piece : pieces)
             {
                 if(piece.position == p)
                 {
-                    
+                    if(lastPoint != null && Math.round(lastPoint.distance(p)) == 1)
+                    {
+                        
+                    }
                 }
             }
             
@@ -201,7 +218,7 @@ public class Board
             }
         }   
         
-        moves = this.filterMoves(moves);
+        moves = this.filterMoves(moves, piece);
         
         return moves;
     }
