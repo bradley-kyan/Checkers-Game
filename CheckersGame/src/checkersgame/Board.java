@@ -28,14 +28,14 @@ public class Board
                 if(y == 0 || y == 2)
                 {
                     pieces.add(new Piece(Colour.RED, Rank.PAWN, 
-                        new Point(x, y)));
+                        new Point(x++, y)));
                 }
                 else
                 {
                     if(x++ >= dimension)
                         continue;
                     
-                    pieces.add(new Piece(Colour.BLACK, Rank.PAWN,
+                    pieces.add(new Piece(Colour.RED, Rank.PAWN,
                         new Point(x, y)));
                 }
             }
@@ -48,7 +48,7 @@ public class Board
                 if(y == 7 || y == 5)
                 {
                     pieces.add(new Piece(Colour.BLACK, Rank.PAWN, 
-                        new Point(x, y)));
+                        new Point(x++, y)));
                 }
                 else
                 {
@@ -167,6 +167,13 @@ public class Board
                 {
                     sameAxisContinue = false;
                     lastPoint = p;
+                    
+                    if(this.getPiece(lastPoint) == null)
+                    {
+                        sameAxisContinue = true;
+                        filteredPoints.add(p);
+                    }
+                    
                     continue;
                 }
                 
@@ -179,14 +186,31 @@ public class Board
                 if(this.getPiece(lastPoint) != null)
                 {
                     sameAxisContinue = true;
-                    filteredPoints.addAll(this.getMoves(p));
+                    
+                    if(this.getPiece(p) == null)
+                    {
+                        lastPoint = p;
+                        sameAxisContinue = true;
+                        filteredPoints.add(p);
+                        continue;
+                    }
+                    
+                    ArrayList<Point> jumpPoints = this.getMoves(p);
+                    
+                    filteredPoints.addAll(jumpPoints);
+                    
+                    filteredPoints.add(p);
+                }
+                else if(this.getPiece(lastPoint) == null)
+                {
+                    sameAxisContinue = true;
                     filteredPoints.add(p);
                 }
             }
             
             lastPoint = p;
         }
-        return rawMoves;
+        return filteredPoints;
     }
     
     public void removePiece(int ID)
@@ -230,34 +254,41 @@ public class Board
     {
         ArrayList<Point> moves = new ArrayList<Point>();
         
-        Point tempPos = piece.position;
+        Point tempPos = new Point(piece.position);
 
-        while(++tempPos.x < dimension)
+        while(++tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(++tempPos.y < dimension)
+            while(++tempPos.y < dimension && tempPos.y >= 0)
             {
-                moves.add(tempPos);
+                moves.add(new Point(tempPos));
+                break;
             }
         }
-        while(++tempPos.x < dimension)
+        tempPos = new Point(piece.position);
+        while(++tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(--tempPos.y < dimension)
+            while(--tempPos.y < dimension && tempPos.y >= 0)
             {
-                moves.add(tempPos);
+                moves.add(new Point(tempPos));
+                break;
             }
         }
-        while(--tempPos.x < dimension)
+        tempPos = new Point(piece.position);
+        while(--tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(++tempPos.y < dimension)
+            while(++tempPos.y < dimension && tempPos.y >= 0)
             {
-                moves.add(tempPos);
+                moves.add(new Point(tempPos));
+                break;
             }
         }
-        while(--tempPos.x < dimension)
+        tempPos = new Point(piece.position);
+        while(--tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(--tempPos.y < dimension)
+            while(--tempPos.y < dimension && tempPos.y >= 0)
             {
-                moves.add(tempPos);
+                moves.add(new Point(tempPos));
+                break;
             }
         }   
         
