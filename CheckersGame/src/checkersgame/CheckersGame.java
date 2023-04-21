@@ -24,7 +24,52 @@ public class CheckersGame {
             System.out.println(p.position + " : " + p.getID() + " => " + p.getRank() + " " + p.getColour());
         }
         
+        board.updateMoves();
         System.out.println("");
-        System.out.println(board.getMoves(new Point(2,0)));
+        
+        Piece p = board.getPiece(new Point(3,5));
+                board.updateMoves();
+
+        ArrayList<LinkedPoint> moves = p.moves;
+        System.out.println("--------------------------");
+        System.out.println(p.position);
+        System.out.println("--------------------------");
+        for(LinkedPoint lp : moves)
+        {
+            System.out.println(lp.toMove);
+            System.out.println(lp.toBeRemoved);
+        }
+        board.movePiece(p, moves.get(0).toMove);
+        System.out.println("--------------------------");
+        System.out.println(p.position);
+        System.out.println("--------------------------");
+        moves = p.moves;
+        for(LinkedPoint lp : moves)
+        {
+            System.out.println(lp.toMove);
+            System.out.println(lp.toBeRemoved);
+        }
+        
+        board.movePiece(p, moves.get(0).toMove);
+        
+        System.out.println("--------------------------");
+        System.out.println(p.position);
+        System.out.println("--------------------------");
+
+        moves = p.moves;
+        for(LinkedPoint lp : moves)
+        {
+            System.out.println(lp.toMove);
+            System.out.println(lp.toBeRemoved);
+        }
+        board.updateMoves();
+        
+        
+        System.out.println("==========================");
+        for(Piece poo : pieces)
+        {
+            System.out.println(poo.position + " : " + poo.getID() + " => " + poo.getRank() + " " + poo.getColour());
+        }
+        
     }
 }

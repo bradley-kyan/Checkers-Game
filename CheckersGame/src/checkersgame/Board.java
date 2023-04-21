@@ -45,7 +45,7 @@ public class Board
         {
             for(int x = 0; x < dimension; x++)
             {
-                if(y == 7 || y == 5)
+                if(y == 6)
                 {
                     pieces.add(new Piece(Colour.BLACK, Rank.PAWN, 
                         new Point(x++, y)));
@@ -60,6 +60,14 @@ public class Board
                 }
             }
         }      
+    }
+    
+    public void updateMoves()
+    {
+        for(Piece p : pieces)
+        {
+            p.moves = this.getMoves(p.position);
+        }
     }
     
     public Piece getPiece(int ID)
@@ -78,12 +86,8 @@ public class Board
         
     public Piece getPiece(Point point)
     {
-        Iterator it = this.pieces.iterator();
-        
-        while(it.hasNext())
+        for(Piece p : pieces)
         {
-            Piece p = (Piece) it.next();
-            
             if(p.position.equals(point))
                 return p;
         }
@@ -95,133 +99,96 @@ public class Board
         return this.pieces;
     }
     
-    public void movePiece()
+    public void movePiece(Piece piece, Point location)
     {
+        ArrayList<LinkedPoint> points = piece.moves;
         
-    }
-    
-    public Point canJump(Piece p)
-    {   
-        return null;
-    }
-    
-    public Boolean canMove()
-    {
-        return false;
-    }
-    
-    public Point validMove(int ID, Point p)
-    {
-        Piece current = this.getPiece(ID);
-
-        if(p.x >= 0 && p.y < dimension)
+        for(LinkedPoint lp : points)
         {
-            for(Piece piece : pieces)
+            if(lp.toMove.equals(location))
             {
-                if(piece.getPos() == p)
+                for(Point p : lp.toBeRemoved)
                 {
-                    Point jumpPos = canJump(piece);
-                    
-                    if(jumpPos != null)
-                        return jumpPos;
-                    
-                    return null;
-                }               
-                return p;
+                    this.removePiece(this.getPiece(p));
+                }
+                piece.position.setLocation(lp.toMove);
             }
-        }      
-        return null;
+        }
+        this.updateMoves();
     }
     
-    public ArrayList<Point> filterMoves(ArrayList<Point> rawMoves, Piece originPiece)
-    {
-        Point lastPoint = null;
-        ArrayList<Point> filteredPoints = new ArrayList<Point>();
+    public ArrayList<LinkedPoint> filterMoves(ArrayList<ArrayList<Point>> directionalMoves, Piece origin)
+    {     
+        ArrayList<LinkedPoint> filtered = new ArrayList<LinkedPoint>();
         
-        boolean sameAxisContinue = false;
-        
-        for(Point p : rawMoves)
+        for(ArrayList<Point> dimension : directionalMoves)
         {
-            if(this.getPiece(p) != null)
+            LinkedPoint lp = new LinkedPoint();
+            Point lastPoint = null;
+            
+            for(Point p : dimension)
             {
-                if(lastPoint != null && Math.round(lastPoint.distance(p)) == 1)
+                //There is no piece at the place we want to move to thus we can move
+                if(this.getPiece(p) == null && this.getPiece(lastPoint) == null)
                 {
-                    if(sameAxisContinue == true)
-                        continue;
-                    
-                    if(this.getPiece(lastPoint) != null)
-                    {
-                        sameAxisContinue = true;
-                        lastPoint = p;
-                        continue;
-                    }
-                }
-                else
-                {
-                    sameAxisContinue = false;   
-                }
-            }
-            else
-            {
-                if(lastPoint != null && Math.round(lastPoint.distance(p)) != 1)
-                {
-                    sameAxisContinue = false;
-                    lastPoint = p;
-                    
-                    if(this.getPiece(lastPoint) == null)
-                    {
-                        sameAxisContinue = true;
-                        filteredPoints.add(p);
-                    }
-                    
-                    continue;
+                    lp.toMove = new Point(p);
+                    lp.origin = origin;
+                    filtered.add(lp);
+                    break;
                 }
                 
-                if(sameAxisContinue == true)                
-                {
-                    lastPoint = p;
-                    continue;
-                }
-                
+                //There is a piece to jump
                 if(this.getPiece(lastPoint) != null)
                 {
-                    sameAxisContinue = true;
-                    
-                    if(this.getPiece(p) == null)
+                    //Can we move to the next square
+                    if(this.getPiece(p) != null)
                     {
-                        lastPoint = p;
-                        sameAxisContinue = true;
-                        filteredPoints.add(p);
-                        continue;
+                        break; //We cannot move
                     }
-                    
-                    ArrayList<Point> jumpPoints = this.getMoves(p);
-                    
-                    filteredPoints.addAll(jumpPoints);
-                    
-                    filteredPoints.add(p);
-                }
-                else if(this.getPiece(lastPoint) == null)
-                {
-                    sameAxisContinue = true;
-                    filteredPoints.add(p);
+                    else
+                    {
+                        //Check if the piece to be jumped is the same colour
+                        if(this.getPiece(lastPoint).getColour().equals(origin.getColour()))
+                        {
+                            break;
+                        }
+                        
+                        lp.toMove = new Point(p);
+                        lp.toBeRemoved.add(lastPoint);
+                        lp.origin = origin;
+
+                        //Coninue to check if you can do more jumps;
+                        ArrayList<LinkedPoint> nthFiltered = filterMoves(this.potentialMoves(p), origin);
+                        
+                        for(LinkedPoint i : nthFiltered)
+                        {
+                            //Add the previous removed pieces to the nth dimension
+                            i.toBeRemoved.add(lastPoint);
+                        }
+                        
+                        //Add these new positions to the moveset
+                        filtered.add(lp);
+                        filtered.addAll(nthFiltered);
+                        
+                        break;
+                    }          
                 }
             }
-            
-            lastPoint = p;
-        }
-        return filteredPoints;
+        }    
+        return filtered;
     }
     
-    public void removePiece(int ID)
+    private void removePiece(Piece piece)
     {
         Iterator it = pieces.iterator();
         
         while(it.hasNext())
         {
-            Piece p = (Piece)it.next();
-            if(p.getID() == ID)
+            if(it.next().equals(piece))
+            {
                 it.remove();
+                return;
+            }
         }
     }
     
@@ -240,60 +207,62 @@ public class Board
         return count;
     }
     
-    public ArrayList<Point> getMoves(int ID)
+    private ArrayList<LinkedPoint> getMoves(Point origin)
     {
-        return this.getMoves(this.getPiece(ID));
+        return this.filterMoves(this.potentialMoves(origin), this.getPiece(origin));
     }
     
-    public ArrayList<Point> getMoves(Point point)
+    private ArrayList<ArrayList<Point>> potentialMoves(Point p)
     {
-        return this.getMoves(this.getPiece(point));
-    }
-    
-    private ArrayList<Point> getMoves(Piece piece)
-    {
+        ArrayList<ArrayList<Point>> directionalMoves = new ArrayList<ArrayList<Point>>();
+        
         ArrayList<Point> moves = new ArrayList<Point>();
         
-        Point tempPos = new Point(piece.position);
-
+        Point tempPos = new Point(p);
+        
         while(++tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(++tempPos.y < dimension && tempPos.y >= 0)
+            if(++tempPos.y < dimension && tempPos.y >= 0)
             {
                 moves.add(new Point(tempPos));
-                break;
             }
         }
-        tempPos = new Point(piece.position);
+        
+        directionalMoves.add(moves);
+        moves = new ArrayList<Point>();
+        
+        tempPos.setLocation(p);
         while(++tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(--tempPos.y < dimension && tempPos.y >= 0)
+            if(--tempPos.y < dimension && tempPos.y >= 0)
             {
                 moves.add(new Point(tempPos));
-                break;
             }
         }
-        tempPos = new Point(piece.position);
+        directionalMoves.add(moves);
+        moves = new ArrayList<Point>();
+        
+        tempPos.setLocation(p);
         while(--tempPos.x < dimension && tempPos.x >= 0)
         {
-            while(++tempPos.y < dimension && tempPos.y >= 0)
+            if(--tempPos.y < dimension && tempPos.y >= 0)
             {
                 moves.add(new Point(tempPos));
-                break;
-            }
-        }
-        tempPos = new Point(piece.position);
-        while(--tempPos.x < dimension && tempPos.x >= 0)
-        {
-            while(--tempPos.y < dimension && tempPos.y >= 0)
-            {
-                moves.add(new Point(tempPos));
-                break;
             }
         }   
         
-        moves = this.filterMoves(moves, piece);
+        directionalMoves.add(moves);
+        moves = new ArrayList<Point>();
         
-        return moves;
+        tempPos.setLocation(p);
+        while(--tempPos.x < dimension && tempPos.x >= 0)
+        {
+            if(++tempPos.y < dimension && tempPos.y >= 0)
+            {
+                moves.add(new Point(tempPos));
+            }
+        }      
+                
+        return directionalMoves;
     }
 }

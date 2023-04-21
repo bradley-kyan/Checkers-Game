@@ -1,6 +1,7 @@
 package checkersgame;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * @author bradl
@@ -13,6 +14,7 @@ public class Piece {
     public Point position;
     public int direction;
     private static Integer pieceNum;
+    public ArrayList<LinkedPoint> moves;
     
     public Piece(Colour colour, Rank rank, Point pos)
     {
