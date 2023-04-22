@@ -16,6 +16,8 @@ public class Piece {
     private static Integer pieceNum;
     public ArrayList<LinkedPoint> moves;
     
+    public Character hintIdentifier;
+    
     public Piece(Colour colour, Rank rank, Point pos)
     {
         this.colour = colour;
@@ -31,6 +33,11 @@ public class Piece {
         this.ID = pieceNum++;
         
         this.position = pos;
+    }
+    
+    public Piece(char c)
+    {
+        hintIdentifier = c;
     }
     
     public Colour getColour() {
