@@ -17,7 +17,7 @@ public class CheckersGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Board board = new Board(8);
+        DrawBoard board = new DrawBoard(8);
         ArrayList<Piece> pieces = board.getPieces();
         for(Piece p : pieces)
         {
@@ -71,5 +71,6 @@ public class CheckersGame {
             System.out.println(poo.position + " : " + poo.getID() + " => " + poo.getRank() + " " + poo.getColour());
         }
         
+        board.drawPieces();
     }
 }

@@ -7,10 +7,10 @@ import java.util.Iterator;
 /**
  * @author bradl
  */
-public class Board 
+public class Board
 {    
     public ArrayList<Piece> pieces;
-    private int dimension;
+    protected int dimension;
     
     public Board(int size)
     {
