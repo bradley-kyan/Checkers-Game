@@ -28,19 +28,19 @@ public class CheckersGame {
         board.updateMoves();
         board.drawPieces(Colour.BLACK);
         
-        Piece[][] boardFrame2 = board.drawHint(Colour.BLACK, 21);
-        board.chooseHint('a', boardFrame2, 21);
+        boardFrame = board.drawHint(Colour.BLACK, 21);
+        board.chooseHint('a', boardFrame, 21);
         board.updateMoves();
         board.drawPieces(Colour.RED);
         
         board.drawPieces(Colour.BLACK);
-        Piece[][] boardFrame3 = board.drawHint(Colour.BLACK, 22);
-        board.chooseHint('a', boardFrame3, 22);
+        boardFrame = board.drawHint(Colour.BLACK, 22);
+        board.chooseHint('a', boardFrame, 22);
         board.updateMoves();
         
         board.drawPieces(Colour.RED);
-        Piece[][] boardFrame4 = board.drawHint(Colour.RED, 10);
-        board.chooseHint('a', boardFrame4, 10);
+        boardFrame = board.drawHint(Colour.RED, 10);
+        board.chooseHint('a', boardFrame, 10);
         board.updateMoves();
         
         board.updateMoves();
