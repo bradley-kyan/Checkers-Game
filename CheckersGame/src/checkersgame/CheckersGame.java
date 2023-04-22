@@ -6,6 +6,8 @@ package checkersgame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,59 +19,33 @@ public class CheckersGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Board board = new Board(8);
-        ArrayList<Piece> pieces = board.getPieces();
-        for(Piece p : pieces)
-        {
-            System.out.println(p.position + " : " + p.getID() + " => " + p.getRank() + " " + p.getColour());
-        }
+        DrawBoard board = new DrawBoard(8);       
+        board.updateMoves();       
+        board.drawPieces(Colour.RED);
+        Piece[][] boardFrame = board.drawHint(Colour.RED, 10);
         
+        board.chooseHint('b', boardFrame, 10);
         board.updateMoves();
-        System.out.println("");
+        board.drawPieces(Colour.BLACK);
         
-        Piece p = board.getPiece(new Point(3,5));
-                board.updateMoves();
-        System.out.println(p.getID());
-        ArrayList<LinkedPoint> moves = p.moves;
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
-        board.movePiece(p, moves.get(0).toMove);
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-        moves = p.moves;
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
+        Piece[][] boardFrame2 = board.drawHint(Colour.BLACK, 21);
+        board.chooseHint('a', boardFrame2, 21);
+        board.updateMoves();
+        board.drawPieces(Colour.RED);
         
-        board.movePiece(p, moves.get(0).toMove);
-        
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-
-        moves = p.moves;
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
+        board.drawPieces(Colour.BLACK);
+        Piece[][] boardFrame3 = board.drawHint(Colour.BLACK, 22);
+        board.chooseHint('a', boardFrame3, 22);
         board.updateMoves();
         
+        board.drawPieces(Colour.RED);
+        Piece[][] boardFrame4 = board.drawHint(Colour.RED, 10);
+        board.chooseHint('a', boardFrame4, 10);
+        board.updateMoves();
         
-        System.out.println("==========================");
-        for(Piece poo : pieces)
-        {
-            System.out.println(poo.position + " : " + poo.getID() + " => " + poo.getRank() + " " + poo.getColour());
-        }
+        board.updateMoves();
+        board.drawPieces(Colour.BLACK);
+        
         
     }
 }

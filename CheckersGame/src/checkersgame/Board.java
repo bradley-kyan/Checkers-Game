@@ -7,10 +7,10 @@ import java.util.Iterator;
 /**
  * @author bradl
  */
-public class Board 
+public class Board
 {    
     public ArrayList<Piece> pieces;
-    private int dimension;
+    protected int dimension;
     
     public Board(int size)
     {
@@ -109,7 +109,7 @@ public class Board
             {
                 for(Point p : lp.toBeRemoved)
                 {
-                    this.removePiece(this.getPiece(p));
+                    this.pieces.remove(this.getPiece(p));
                 }
                 piece.position.setLocation(lp.toMove);
             }
@@ -157,40 +157,27 @@ public class Board
                         lp.toBeRemoved.add(lastPoint);
                         lp.origin = origin;
 
-                        //Coninue to check if you can do more jumps;
-                        ArrayList<LinkedPoint> nthFiltered = filterMoves(this.potentialMoves(p), origin);
-                        
-                        for(LinkedPoint i : nthFiltered)
-                        {
-                            //Add the previous removed pieces to the nth dimension
-                            i.toBeRemoved.add(lastPoint);
-                        }
+//                        //Coninue to check if you can do more jumps;
+//                        ArrayList<LinkedPoint> nthFiltered = filterMoves(this.potentialMoves(p), origin);
+//                        
+//                        for(LinkedPoint i : nthFiltered)
+//                        {
+//                            //Add the previous removed pieces to the nth dimension
+//                            i.toBeRemoved.add(lastPoint);
+//                        }
                         
                         //Add these new positions to the moveset
                         filtered.add(lp);
-                        filtered.addAll(nthFiltered);
+//                        filtered.addAll(nthFiltered);
                         
                         break;
                     }          
                 }
+                lastPoint = p;
             }
         }    
         return filtered;
-    }
-    
-    private void removePiece(Piece piece)
-    {
-        Iterator it = pieces.iterator();
-        
-        while(it.hasNext())
-        {
-            if(it.next().equals(piece))
-            {
-                it.remove();
-                return;
-            }
-        }
-    }
+    }  
     
     public int remainingPieces(Colour colour)
     {
@@ -226,9 +213,9 @@ public class Board
             {
                 moves.add(new Point(tempPos));
             }
-        }
-        
+        }        
         directionalMoves.add(moves);
+        
         moves = new ArrayList<Point>();
         
         tempPos.setLocation(p);
@@ -240,6 +227,7 @@ public class Board
             }
         }
         directionalMoves.add(moves);
+        
         moves = new ArrayList<Point>();
         
         tempPos.setLocation(p);
@@ -249,9 +237,9 @@ public class Board
             {
                 moves.add(new Point(tempPos));
             }
-        }   
-        
+        }       
         directionalMoves.add(moves);
+        
         moves = new ArrayList<Point>();
         
         tempPos.setLocation(p);
@@ -261,9 +249,9 @@ public class Board
             {
                 moves.add(new Point(tempPos));
             }
-        }      
+        } 
         directionalMoves.add(moves);
-
+                
         return directionalMoves;
     }
 }
