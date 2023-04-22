@@ -61,7 +61,7 @@ public class DrawBoard extends Board{
     
     private void clearScreen()
     {
-        for(int i = 0; i < 300; i++)
+        for(int i = 0; i < 100; i++)
         {
             System.out.println();
         }
@@ -71,21 +71,21 @@ public class DrawBoard extends Board{
     {
         if(id > 9)
         {
-            lines[0] += "|-----------|";
-            lines[1] += "|  _______  |";
-            lines[2] += "| |  Red  | |";
-            lines[3] += "| |   "+id+"  | |";
-            lines[4] += "| |_______| |";  
-            lines[5] += "|___________|";
+            lines[0] += "|-------------|";
+            lines[1] += "|   _______   |";
+            lines[2] += "|  |  Red  |  |";
+            lines[3] += "|  |   "+id+"  |  |";
+            lines[4] += "|  |_______|  |";  
+            lines[5] += "|_____________|";
         }
         else
         {
-            lines[0] += "|-----------|";
-            lines[1] += "|  _______  |";
-            lines[2] += "| |  Red  | |";
-            lines[3] += "| |   "+id+"   | |";
-            lines[4] += "| |_______| |";  
-            lines[5] += "|___________|"; 
+            lines[0] += "|-------------|";
+            lines[1] += "|   _______   |";
+            lines[2] += "|  |  Red  |  |";
+            lines[3] += "|  |   "+id+"   |  |";
+            lines[4] += "|  |_______|  |";  
+            lines[5] += "|_____________|"; 
         }
         
         return lines;
@@ -95,21 +95,21 @@ public class DrawBoard extends Board{
     {
         if(id > 9)
         {
-            lines[0] += "|-----------|";
-            lines[1] += "|  _______  |";
-            lines[2] += "| | Black | |";
-            lines[3] += "| |  "+id+"   | |";
-            lines[4] += "| |_______| |";  
-            lines[5] += "|___________|";
+            lines[0] += "|-------------|";
+            lines[1] += "|   _______   |";
+            lines[2] += "|  | Black |  |";
+            lines[3] += "|  |  "+id+"   |  |";
+            lines[4] += "|  |_______|  |";  
+            lines[5] += "|_____________|";
         }
         else
         {
-            lines[0] += "|-----------|";
-            lines[1] += "|  _______  |";
-            lines[2] += "| | Black | |";
-            lines[3] += "| |  "+id+"  | |";
-            lines[4] += "| |_______| |";  
-            lines[5] += "|___________|"; 
+            lines[0] += "|-------------|";
+            lines[1] += "|   _______   |";
+            lines[2] += "|  | Black |  |";
+            lines[3] += "|  |  "+id+"  |  |";
+            lines[4] += "|  |_______|  |";  
+            lines[5] += "|_____________|"; 
         }
         
         return lines;
@@ -117,12 +117,12 @@ public class DrawBoard extends Board{
     
     private String[] drawSpace(String[] lines)
     {        
-        lines[0] += "|-----------|";
-        lines[1] += "|           |";
-        lines[2] += "|           |";
-        lines[3] += "|           |";
-        lines[4] += "|           |";
-        lines[5] += "|___________|"; 
+        lines[0] += "|-------------|";
+        lines[1] += "|             |";
+        lines[2] += "|             |";
+        lines[3] += "|             |";
+        lines[4] += "|             |";
+        lines[5] += "|_____________|"; 
         
         return lines;
     }

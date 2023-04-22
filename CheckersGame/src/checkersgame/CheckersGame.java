@@ -6,6 +6,8 @@ package checkersgame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,58 +20,8 @@ public class CheckersGame {
      */
     public static void main(String[] args) {
         DrawBoard board = new DrawBoard(8);
-        ArrayList<Piece> pieces = board.getPieces();
-        for(Piece p : pieces)
-        {
-            System.out.println(p.position + " : " + p.getID() + " => " + p.getRank() + " " + p.getColour());
-        }
         
         board.updateMoves();
-        System.out.println("");
-        
-        Piece p = board.getPiece(new Point(3,5));
-                board.updateMoves();
-
-        ArrayList<LinkedPoint> moves = p.moves;
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
-        board.movePiece(p, moves.get(0).toMove);
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-        moves = p.moves;
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
-        
-        board.movePiece(p, moves.get(0).toMove);
-        
-        System.out.println("--------------------------");
-        System.out.println(p.position);
-        System.out.println("--------------------------");
-
-        moves = p.moves;
-        for(LinkedPoint lp : moves)
-        {
-            System.out.println(lp.toMove);
-            System.out.println(lp.toBeRemoved);
-        }
-        board.updateMoves();
-        
-        
-        System.out.println("==========================");
-        for(Piece poo : pieces)
-        {
-            System.out.println(poo.position + " : " + poo.getID() + " => " + poo.getRank() + " " + poo.getColour());
-        }
         
         board.drawPieces();
     }
