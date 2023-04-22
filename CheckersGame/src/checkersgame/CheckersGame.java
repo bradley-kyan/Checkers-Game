@@ -29,7 +29,7 @@ public class CheckersGame {
         
         Piece p = board.getPiece(new Point(3,5));
                 board.updateMoves();
-
+        System.out.println(p.getID());
         ArrayList<LinkedPoint> moves = p.moves;
         System.out.println("--------------------------");
         System.out.println(p.position);

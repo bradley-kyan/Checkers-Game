@@ -262,7 +262,8 @@ public class Board
                 moves.add(new Point(tempPos));
             }
         }      
-                
+        directionalMoves.add(moves);
+
         return directionalMoves;
     }
 }
