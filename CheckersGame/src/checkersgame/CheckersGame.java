@@ -6,6 +6,7 @@ package checkersgame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,37 +16,59 @@ import java.util.logging.Logger;
  */
 public class CheckersGame {
 
+    private static Player currentPlayer;
+    private static DrawBoard board;
+    private static Scanner scan;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DrawBoard board = new DrawBoard(8);       
-        board.updateMoves();       
-        board.drawPieces(Colour.RED);
-        Piece[][] boardFrame = board.drawHint(Colour.RED, 10);
-        
-        board.chooseHint('b', boardFrame, 10);
-        board.updateMoves();
-        board.drawPieces(Colour.BLACK);
-        
-        boardFrame = board.drawHint(Colour.BLACK, 21);
-        board.chooseHint('a', boardFrame, 21);
-        board.updateMoves();
-        board.drawPieces(Colour.RED);
-        
-        board.drawPieces(Colour.BLACK);
-        boardFrame = board.drawHint(Colour.BLACK, 22);
-        board.chooseHint('a', boardFrame, 22);
-        board.updateMoves();
-        
-        board.drawPieces(Colour.RED);
-        boardFrame = board.drawHint(Colour.RED, 10);
-        board.chooseHint('a', boardFrame, 10);
-        board.updateMoves();
-        
-        board.updateMoves();
-        board.drawPieces(Colour.BLACK);
-        
-        
+        scan = new Scanner(System.in);
+        runGame();
     }
+    
+    public static void runGame()
+    {
+        board = new DrawBoard(8);
+        Player player = new Player(Colour.RED);
+        
+        while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)
+        {
+            playTurn(player);
+        }
+    }
+    
+    private static void playTurn(Player currentPlayer)
+    {
+        board.updateMoves();
+        board.drawPieces(currentPlayer.getColour());
+        
+        Integer intInput = scan.nextInt();
+        //TODO add error checking for intInput
+        
+        
+        if(board.getPiece(intInput).getColour() != currentPlayer.getColour())
+            return;
+        
+        Piece[][] boardFrame = board.drawHint(currentPlayer.getColour(), intInput);      
+        
+        char charInput = scan.next().charAt(0);
+                
+        if(charInput == 'x' || charInput == 'X') //Player pressed x to go back to selection
+            return;
+        
+        boolean test = board.chooseHint(charInput, boardFrame, intInput);
+        if(!test)
+            return;
+        
+        board.updateMoves();
+        
+        currentPlayer.colourSwitching();
+        board.drawPieces(currentPlayer.getColour());
+        scan.nextLine();
+    }
+    
+    
+    
 }

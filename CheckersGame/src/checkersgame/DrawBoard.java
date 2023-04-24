@@ -130,7 +130,7 @@ public class DrawBoard extends Board{
             }
         }  
         
-        System.out.println("\nChoose " + currentTurn + " Piece to move (Enter number of piece): ");
+        System.out.println("\nChoose where " + currentTurn + " Piece #" + ID +  " will move (Enter character of move, Press x to go back to selection): ");
         return boardFrame;
     }
     
@@ -142,7 +142,7 @@ public class DrawBoard extends Board{
         }
     }
     
-    public void chooseHint(Character c, Piece[][] boardFrame, int ID)
+    public boolean chooseHint(Character c, Piece[][] boardFrame, int ID)
     {
         for (int y = boardFrame.length - 1; y >= 0; y--)
         {
@@ -157,10 +157,12 @@ public class DrawBoard extends Board{
                     {
                         Point move = new Point(x,y);
                         super.movePiece(super.getPiece(ID), move);
+                        return true;
                     }
                 }
             }
-        }  
+        }
+        return false;
     }
     
     public String[] drawRed(int id, String[] lines)
