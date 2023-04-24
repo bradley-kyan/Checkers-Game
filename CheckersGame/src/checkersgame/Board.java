@@ -45,7 +45,7 @@ public class Board
         {
             for(int x = 0; x < dimension; x++)
             {
-                if(y == 6)
+                if(y == dimension - 2)
                 {
                     pieces.add(new Piece(Colour.BLACK, Rank.PAWN, 
                         new Point(x++, y)));

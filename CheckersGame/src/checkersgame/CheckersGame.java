@@ -30,7 +30,14 @@ public class CheckersGame {
     
     public static void runGame()
     {
-        board = new DrawBoard(8);
+        //TODO ask the user to choose size of board default would be 8
+        int size = scan.nextInt();
+        //TODO add error checking to make only integers valid
+        
+        if(size % 2 != 0) 
+            size++; //Makes sure that he size is an even number to prevent errors.
+        
+        board = new DrawBoard(size);
         Player player = new Player(Colour.RED);
         
         while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)

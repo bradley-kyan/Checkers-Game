@@ -36,8 +36,7 @@ public class DrawBoard extends Board{
             catch(ArrayIndexOutOfBoundsException e)
             {
                 System.out.println("There was an error...\n--------------------\n" + e);
-            }
-            
+            }          
         }
         
         for (int y = boardFrame.length - 1; y >= 0; y--)
@@ -136,7 +135,7 @@ public class DrawBoard extends Board{
     
     private void clearScreen()
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 100 + super.dimension; i++)
         {
             System.out.println();
         }
