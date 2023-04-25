@@ -4,11 +4,7 @@
  */
 package checkersgame;
 
-import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +12,6 @@ import java.util.logging.Logger;
  */
 public class CheckersGame {
 
-    private static Player currentPlayer;
     private static DrawBoard board;
     private static Scanner scan;
     
