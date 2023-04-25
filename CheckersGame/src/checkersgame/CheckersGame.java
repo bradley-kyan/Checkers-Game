@@ -39,10 +39,16 @@ public class CheckersGame {
         boolean input = false;
         
         while (!input) {
-            System.out.println("Please enter an integer to set board size: ");
+            System.out.println("Please enter an integer to set board size(Must be greater than 6): ");
             try {
                 size = scan.nextInt();
+                if(size > 6)
+                {
                 input = true;
+                }
+                else{
+                    System.out.println("Invalid input! Please enter an integer greater than 6.");
+                }
             } catch(InputMismatchException e) {
                 System.out.println("Invalid input! Please enter an integer.");
                 scan.next();
