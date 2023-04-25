@@ -36,8 +36,7 @@ public class DrawBoard extends Board{
             catch(ArrayIndexOutOfBoundsException e)
             {
                 System.out.println("There was an error...\n--------------------\n" + e);
-            }
-            
+            }          
         }
         
         for (int y = boardFrame.length - 1; y >= 0; y--)
@@ -130,19 +129,19 @@ public class DrawBoard extends Board{
             }
         }  
         
-        System.out.println("\nChoose " + currentTurn + " Piece to move (Enter number of piece): ");
+        System.out.println("\nChoose where " + currentTurn + " Piece #" + ID +  " will move (Enter character of move, Press x to go back to selection): ");
         return boardFrame;
     }
     
     private void clearScreen()
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 100 + super.dimension; i++)
         {
             System.out.println();
         }
     }
     
-    public void chooseHint(Character c, Piece[][] boardFrame, int ID)
+    public boolean chooseHint(Character c, Piece[][] boardFrame, int ID)
     {
         for (int y = boardFrame.length - 1; y >= 0; y--)
         {
@@ -157,10 +156,12 @@ public class DrawBoard extends Board{
                     {
                         Point move = new Point(x,y);
                         super.movePiece(super.getPiece(ID), move);
+                        return true;
                     }
                 }
             }
-        }  
+        }
+        return false;
     }
     
     public String[] drawRed(int id, String[] lines)
