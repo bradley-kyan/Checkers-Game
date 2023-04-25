@@ -56,12 +56,6 @@ public class Player {
         
         return null;
     }
-    public static void updatePlayer(Player p)
-    {
-        //TODO will check against playerList to see if player name exists.
-        //If exists will update the playerList with the new scores/wins/losses;
-        //Else will add the player to the playerList
-    }
     public static void updateFile()
     {
         //TODO method which will update the file with all the playerList contents
@@ -70,10 +64,6 @@ public class Player {
     
     public Colour getColour() {
         return this.colour;
-    }
-    
-    public void colourSwitching(){
-        colour = (colour == Colour.RED) ? colour.BLACK : colour.RED;
     }
     
     public void capture()

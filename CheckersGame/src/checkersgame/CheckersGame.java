@@ -84,6 +84,8 @@ public class CheckersGame {
         else
             playerRed.win();
         
+        Player.updateFile();
+        //TODO Add some form of scoreboard of all players scores
     }
     private static boolean playTurn(Player currentPlayer)
     {
