@@ -26,14 +26,16 @@ public class CheckersGame {
     
     public static void runGame()
     {
-        System.out.println("Please enter your name: ");
-        String name  = scan.nextLine();
-        System.out.println(getTitle(name));
+        System.out.println("Please enter red's name: ");
+        String nameRed  = scan.nextLine();
+        
+        System.out.println("Please enter blacks's name: ");
+        String nameBlack  = scan.nextLine();
         
         
+        System.out.println(getTitle(nameRed, nameBlack));
         System.out.println("Press 'Enter' to start.");
         String anyKey  = scan.nextLine();
-        
         int size  =  0;
         boolean input = false;
         
@@ -58,14 +60,16 @@ public class CheckersGame {
             size++; //Makes sure that he size is an even number to prevent errors.
         
         board = new DrawBoard(size);
-        Player player = new Player(Colour.RED);
+        Player playerRed = new Player(nameRed, Colour.RED);
+        Player playerBlack = new Player(nameBlack, Colour.BLACK);
         
         while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)
         {
-            playTurn(player);
+            while(!playTurn(playerRed));
+            while(!playTurn(playerBlack));
         }
     }
-    private static void playTurn(Player currentPlayer)
+    private static boolean playTurn(Player currentPlayer)
     {
         board.updateMoves();
         board.drawPieces(currentPlayer.getColour());
@@ -83,27 +87,31 @@ public class CheckersGame {
             }
         }
 
-        if(board.getPiece(intInput).getColour() != currentPlayer.getColour())
-            return;
+        if(board.getPiece(intInput) == null || board.getPiece(intInput).getColour() != currentPlayer.getColour())   
+        {
+            return false;
+        }
         
         Piece[][] boardFrame = board.drawHint(currentPlayer.getColour(), intInput);      
         
         char charInput = scan.next().charAt(0);
                 
         if(charInput == 'x' || charInput == 'X') //Player pressed x to go back to selection
-            return;
+            return false;
         
         boolean test = board.chooseHint(charInput, boardFrame, intInput);
         if(!test)
-            return;
+            return false;
         
         board.updateMoves();
         
         currentPlayer.colourSwitching();
         board.drawPieces(currentPlayer.getColour());
         scan.nextLine();
+        
+        return true;
     }
-    private static String getTitle(String userName) {
+    private static String getTitle(String userName1, String userName2) {
         return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
                 + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
                 + "\\ \\  \\___|\\ \\  \\\\\\  \\ \\   __/|\\ \\  \\___|\\ \\  \\/  /|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|_    \n"
@@ -114,6 +122,6 @@ public class CheckersGame {
                 + "                                                                          \\|_________|\n"
                 + "                                                                                      \n"
                 + "\n"
-                + "Welcome " + userName + "!");
+                + "Welcome " + userName1 + " and " + userName2 + "!");
     }
 }
