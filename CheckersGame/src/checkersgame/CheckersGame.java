@@ -60,14 +60,30 @@ public class CheckersGame {
             size++; //Makes sure that he size is an even number to prevent errors.
         
         board = new DrawBoard(size);
+        
         Player playerRed = new Player(nameRed, Colour.RED);
         Player playerBlack = new Player(nameBlack, Colour.BLACK);
         
+        
         while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)
         {
+            int currentRed = board.remainingPieces(Colour.RED);
+            int currentBlack = board.remainingPieces(Colour.BLACK);
+            
             while(!playTurn(playerRed));
             while(!playTurn(playerBlack));
+            
+            if(currentRed > board.remainingPieces(Colour.RED))
+                playerBlack.capture();
+            if(currentBlack > board.remainingPieces(Colour.BLACK))
+                playerRed.capture();
         }
+        
+        if(board.remainingPieces(Colour.BLACK) > board.remainingPieces(Colour.RED))
+            playerBlack.win();
+        else
+            playerRed.win();
+        
     }
     private static boolean playTurn(Player currentPlayer)
     {
@@ -105,7 +121,6 @@ public class CheckersGame {
         
         board.updateMoves();
         
-        currentPlayer.colourSwitching();
         board.drawPieces(currentPlayer.getColour());
         scan.nextLine();
         
