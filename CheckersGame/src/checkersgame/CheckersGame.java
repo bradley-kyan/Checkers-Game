@@ -57,10 +57,19 @@ public class CheckersGame {
         board.updateMoves();
         board.drawPieces(currentPlayer.getColour());
         
-        Integer intInput = scan.nextInt();
-        //TODO add error checking for intInput
+        Integer intInput   =  0;
+        boolean input = false;
         
-        
+        while (!input) {
+            try {
+                intInput = scan.nextInt();
+                input = true;
+            } catch(InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scan.next();
+            }
+        }
+
         if(board.getPiece(intInput).getColour() != currentPlayer.getColour())
             return;
         
