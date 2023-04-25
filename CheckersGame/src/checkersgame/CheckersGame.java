@@ -4,6 +4,7 @@
  */
 package checkersgame;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -25,11 +26,21 @@ public class CheckersGame {
     
     public static void runGame()
     {
-        //TODO ask the user to choose size of board default would be 8
-        int size = scan.nextInt();
-        //TODO add error checking to make only integers valid
+        int size  =  0;
+        boolean input = false;
         
-        if(size % 2 != 0) 
+        while (!input) {
+            System.out.println("Please enter an integer to set board size: ");
+            try {
+                size = scan.nextInt();
+                input = true;
+            } catch(InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scan.next();
+            }
+        }
+
+        if (size % 2 != 0)
             size++; //Makes sure that he size is an even number to prevent errors.
         
         board = new DrawBoard(size);
