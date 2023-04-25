@@ -33,7 +33,6 @@ public class CheckersGame {
         
         System.out.println("Press 'Enter' to start.");
         String anyKey  = scan.nextLine();
-//        scan.next();
         
         int size  =  0;
         boolean input = false;
