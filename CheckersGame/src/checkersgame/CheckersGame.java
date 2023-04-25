@@ -26,6 +26,15 @@ public class CheckersGame {
     
     public static void runGame()
     {
+        System.out.println("Please enter your name: ");
+        String name  = scan.nextLine();
+        System.out.println(getTitle(name));
+        
+        
+        System.out.println("Press 'Enter' to start.");
+        String anyKey  = scan.nextLine();
+//        scan.next();
+        
         int size  =  0;
         boolean input = false;
         
@@ -51,7 +60,6 @@ public class CheckersGame {
             playTurn(player);
         }
     }
-    
     private static void playTurn(Player currentPlayer)
     {
         board.updateMoves();
@@ -90,7 +98,17 @@ public class CheckersGame {
         board.drawPieces(currentPlayer.getColour());
         scan.nextLine();
     }
-    
-    
-    
+    private static String getTitle(String userName) {
+        return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
+                + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
+                + "\\ \\  \\___|\\ \\  \\\\\\  \\ \\   __/|\\ \\  \\___|\\ \\  \\/  /|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|_    \n"
+                + " \\ \\  \\    \\ \\   __  \\ \\  \\_|/_\\ \\  \\    \\ \\   ___  \\ \\  \\_|/_\\ \\   _  _\\ \\_____  \\   \n"
+                + "  \\ \\  \\____\\ \\  \\ \\  \\ \\  \\_|\\ \\ \\  \\____\\ \\  \\\\ \\  \\ \\  \\_|\\ \\ \\  \\\\  \\\\|____|\\  \\  \n"
+                + "   \\ \\_______\\ \\__\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\ \\__\\\\ _\\ ____\\_\\  \\ \n"
+                + "    \\|_______|\\|__|\\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|\\|__|\\|__|\\_________\\\n"
+                + "                                                                          \\|_________|\n"
+                + "                                                                                      \n"
+                + "\n"
+                + "Welcome " + userName + "!");
+    }
 }
