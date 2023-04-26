@@ -1,8 +1,10 @@
 package checkersgame;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,10 +57,9 @@ public class Player {
             return; // don't load players if already loaded
         }
         playerList = new ArrayList<>();
-        File file = new File("players.txt");
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+        try (BufferedReader bReader = new BufferedReader(new FileReader("players.txt"))) {
+            String line;
+            while ((line = bReader.readLine())!= null) {
                 String[] fields = line.split("\t"); // assuming tab-delimited fields
                 String name = fields[0];
                 Colour colour = Colour.valueOf(fields[1]);
@@ -72,6 +73,8 @@ public class Player {
                 playerList.add(player);
             }
         } catch (FileNotFoundException ex) {
+        }catch(IOException ex){
+            
         }
     }
     public Player getPlayer(String name)
