@@ -76,8 +76,13 @@ public class Player {
     }
     public Player getPlayer(String name)
     {
-        //TODO will get the player from the playerList,
-        //if no player will return null, else will return the player from the list
+        for (Player player : playerList) 
+        {
+            if (player.name.equals(name)) 
+            {
+            return player;
+            }
+        }
         
         return null;
     }
