@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -60,7 +62,7 @@ public class Player {
         try (BufferedReader bReader = new BufferedReader(new FileReader("players.txt"))) {
             String line;
             while ((line = bReader.readLine())!= null) {
-                String[] fields = line.split("\t"); // assuming tab-delimited fields
+               String[] fields = line.split(" "); // assuming tab-delimited fields
                 String name = fields[0];
                 Colour colour = Colour.valueOf(fields[1]);
                 int score = Integer.parseInt(fields[2]);
@@ -137,4 +139,23 @@ public class Player {
     {
         return this.losses;
     }
+    
+    public static void displayLeaderboard() {
+    if(playerList == null)
+        getPlayers();
+    
+    Collections.sort(playerList, new Comparator<Player>() {
+        @Override
+        public int compare(Player p1, Player p2) {
+            return p2.getScore() - p1.getScore(); // sort by descending score
+        }
+    });
+    
+    System.out.println("Leaderboard:");
+    System.out.println("-----------");
+    for(int i = 0; i < Math.min(10, playerList.size()); i++) {
+        Player player = playerList.get(i);
+        System.out.println((i+1) + ". " + player.name +" "+player.getWinLossString());
+    }
+}
 }

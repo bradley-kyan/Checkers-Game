@@ -26,6 +26,9 @@ public class CheckersGame {
     
     public static void runGame()
     {
+        
+        Player.displayLeaderboard();
+        
         System.out.println("Please enter red's name: ");
         String nameRed  = scan.nextLine();
         
@@ -88,6 +91,8 @@ public class CheckersGame {
         Player.updateFile();
         System.out.println(nameRed + " has " + playerRed.getWinLossString());
         System.out.println(nameBlack + " has " + playerBlack.getWinLossString());
+        
+        
     }
     private static boolean playTurn(Player currentPlayer)
     {
