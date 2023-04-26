@@ -64,31 +64,30 @@ public class CheckersGame {
         Player playerRed = new Player(nameRed, Colour.RED);
         Player playerBlack = new Player(nameBlack, Colour.BLACK);
         
-        
         while(true)
-        {
-            int currentRed = board.remainingPieces(Colour.RED);
-            int currentBlack = board.remainingPieces(Colour.BLACK);
+{
+    int currentRed = board.remainingPieces(Colour.RED);
+    int currentBlack = board.remainingPieces(Colour.BLACK);
             
-            while(!playTurn(playerRed));
-            while(!playTurn(playerBlack));
+    if(currentRed == 0 || currentBlack == 0)
+        break;
             
-            if(currentRed > board.remainingPieces(Colour.RED))
-                playerBlack.capture();
-            else if(currentBlack > board.remainingPieces(Colour.BLACK))
-                playerRed.capture();
-            
-            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
-                break;
-        }
-        
+    while(!playTurn(playerRed));
+    if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+        break;
+                
+    while(!playTurn(playerBlack));
+    if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+        break;
+}       
         if(board.remainingPieces(Colour.BLACK) > board.remainingPieces(Colour.RED))
             playerBlack.win();
         else
             playerRed.win();
         
         Player.updateFile();
-        //TODO Add some form of scoreboard of all players scores
+        System.out.println(nameRed + " has " + playerRed.getWinLossString());
+        System.out.println(nameBlack + " has " + playerBlack.getWinLossString());
     }
     private static boolean playTurn(Player currentPlayer)
     {

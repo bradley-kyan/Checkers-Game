@@ -89,15 +89,21 @@ public class Player {
     public static void updateFile()
     {
            
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("players.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("players.txt"))) 
+        {
         for (Player player : playerList) {
             //Player's name, colour, score, wins, and losses to the file
             writer.write(player.name + "," + player.colour.toString() + "," + player.score + "," + player.wins + "," + player.losses + "\n");
         }
-    } catch (IOException e) {
+        } catch (IOException e) {
         System.out.println("An error occurred while writing the players to the file: " + e.getMessage());
-    }
+        }
 
+    }
+    
+    public String getWinLossString()
+    {
+    return "Wins: " + this.wins + ", Losses: " + this.losses;
     }
     
     public Colour getColour() {
