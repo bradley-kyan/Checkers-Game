@@ -4,11 +4,8 @@
  */
 package checkersgame;
 
-import java.awt.Point;
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +13,6 @@ import java.util.logging.Logger;
  */
 public class CheckersGame {
 
-    private static Player currentPlayer;
     private static DrawBoard board;
     private static Scanner scan;
     
@@ -30,52 +26,133 @@ public class CheckersGame {
     
     public static void runGame()
     {
-        //TODO ask the user to choose size of board default would be 8
-        int size = scan.nextInt();
-        //TODO add error checking to make only integers valid
         
-        if(size % 2 != 0) 
+        Player.displayLeaderboard();
+        
+        System.out.println("Please enter red's name: ");
+        String nameRed  = scan.nextLine();
+        
+        System.out.println("Please enter blacks's name: ");
+        String nameBlack  = scan.nextLine();
+        
+        
+        System.out.println(getTitle(nameRed, nameBlack));
+        System.out.println("Press 'Enter' to start.");
+        String anyKey  = scan.nextLine();
+        int size  =  0;
+        boolean input = false;
+        
+        while (!input) {
+            System.out.println("Please enter an integer to set board size(Must be greater than 6): ");
+            try {
+                size = scan.nextInt();
+                if(size > 6)
+                {
+                input = true;
+                }
+                else{
+                    System.out.println("Invalid input! Please enter an integer greater than 6.");
+                }
+            } catch(InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scan.next();
+            }
+        }
+
+        if (size % 2 != 0)
             size++; //Makes sure that he size is an even number to prevent errors.
         
         board = new DrawBoard(size);
-        Player player = new Player(Colour.RED);
         
-        while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)
+        Player playerRed = new Player(nameRed, Colour.RED);
+        Player playerBlack = new Player(nameBlack, Colour.BLACK);
+        
+        while(true)
         {
-            playTurn(player);
-        }
+            int currentRed = board.remainingPieces(Colour.RED);
+            int currentBlack = board.remainingPieces(Colour.BLACK);
+
+            if(currentRed == 0 || currentBlack == 0)
+                break;
+
+            while(!playTurn(playerRed));
+            if(currentBlack != board.remainingPieces(Colour.BLACK))
+                playerRed.capture();
+            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+                break;
+            
+            while(!playTurn(playerBlack));
+            if(currentRed != board.remainingPieces(Colour.RED))
+                playerBlack.capture();
+            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+                break;
+        }       
+        
+        if(board.remainingPieces(Colour.BLACK) > board.remainingPieces(Colour.RED))
+            playerBlack.win();
+        else
+            playerRed.win();
+        
+        Player.updateFile();
+        System.out.println(nameRed + " has " + playerRed.getWinLossString());
+        System.out.println(nameBlack + " has " + playerBlack.getWinLossString());
+        
+        
     }
     
-    private static void playTurn(Player currentPlayer)
+    private static boolean playTurn(Player currentPlayer)
     {
         board.updateMoves();
         board.drawPieces(currentPlayer.getColour());
         
-        Integer intInput = scan.nextInt();
-        //TODO add error checking for intInput
+        Integer intInput   =  0;
+        boolean input = false;
         
-        
-        if(board.getPiece(intInput).getColour() != currentPlayer.getColour())
-            return;
+        while (!input) {
+            try {
+                intInput = scan.nextInt();
+                input = true;
+            } catch(InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scan.next();
+            }
+        }
+
+        if(board.getPiece(intInput) == null || board.getPiece(intInput).getColour() != currentPlayer.getColour())   
+        {
+            return false;
+        }
         
         Piece[][] boardFrame = board.drawHint(currentPlayer.getColour(), intInput);      
         
         char charInput = scan.next().charAt(0);
                 
         if(charInput == 'x' || charInput == 'X') //Player pressed x to go back to selection
-            return;
+            return false;
         
         boolean test = board.chooseHint(charInput, boardFrame, intInput);
         if(!test)
-            return;
+            return false;
         
         board.updateMoves();
         
-        currentPlayer.colourSwitching();
         board.drawPieces(currentPlayer.getColour());
         scan.nextLine();
+        
+        return true;
     }
     
-    
-    
+    private static String getTitle(String userName1, String userName2) {
+        return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
+                + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
+                + "\\ \\  \\___|\\ \\  \\\\\\  \\ \\   __/|\\ \\  \\___|\\ \\  \\/  /|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|_    \n"
+                + " \\ \\  \\    \\ \\   __  \\ \\  \\_|/_\\ \\  \\    \\ \\   ___  \\ \\  \\_|/_\\ \\   _  _\\ \\_____  \\   \n"
+                + "  \\ \\  \\____\\ \\  \\ \\  \\ \\  \\_|\\ \\ \\  \\____\\ \\  \\\\ \\  \\ \\  \\_|\\ \\ \\  \\\\  \\\\|____|\\  \\  \n"
+                + "   \\ \\_______\\ \\__\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\ \\__\\\\ _\\ ____\\_\\  \\ \n"
+                + "    \\|_______|\\|__|\\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|\\|__|\\|__|\\_________\\\n"
+                + "                                                                          \\|_________|\n"
+                + "                                                                                      \n"
+                + "\n"
+                + "Welcome " + userName1 + " and " + userName2 + "!");
+    }
 }
