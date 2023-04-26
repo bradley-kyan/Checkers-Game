@@ -65,7 +65,7 @@ public class CheckersGame {
         Player playerBlack = new Player(nameBlack, Colour.BLACK);
         
         
-        while(board.remainingPieces(Colour.BLACK) > 0 || board.remainingPieces(Colour.RED) > 0)
+        while(true)
         {
             int currentRed = board.remainingPieces(Colour.RED);
             int currentBlack = board.remainingPieces(Colour.BLACK);
@@ -75,8 +75,11 @@ public class CheckersGame {
             
             if(currentRed > board.remainingPieces(Colour.RED))
                 playerBlack.capture();
-            if(currentBlack > board.remainingPieces(Colour.BLACK))
+            else if(currentBlack > board.remainingPieces(Colour.BLACK))
                 playerRed.capture();
+            
+            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+                break;
         }
         
         if(board.remainingPieces(Colour.BLACK) > board.remainingPieces(Colour.RED))
