@@ -72,6 +72,5 @@ public class Piece {
     public void setPos(Point pos)
     {
         this.position = pos;
-    }
-    
+    }   
 }

@@ -141,7 +141,7 @@ public class CheckersGame {
         
         return true;
     }
-    
+
     private static String getTitle(String userName1, String userName2) {
         return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
                 + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
