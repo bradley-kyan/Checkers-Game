@@ -30,9 +30,13 @@ public class Player {
             getPlayers();
         
         Player tempPlayer = this.getPlayer(name);
+        
         if(tempPlayer != null)
         {
             parsePlayer(tempPlayer);
+            this.colour = colour;
+            playerList.remove(tempPlayer);
+            playerList.add(this);
         }
         else
         {
@@ -40,15 +44,19 @@ public class Player {
             this.losses = 0;
             this.wins = 0;
             this.score = 0;
+            this.colour = colour;
+            playerList.add(this);
         }
         
-        this.colour = colour;
+    }
+    private Player(String name)
+    {
+        this.name = name;
     }
     
     private void parsePlayer(Player p)
     {
         this.name = p.name;
-        this.colour = p.colour;
         this.score = p.score;
         this.wins = p.wins;
         this.losses = p.losses;
@@ -58,17 +66,17 @@ public class Player {
         if (playerList != null) {
             return; // don't load players if already loaded
         }
-        playerList = new ArrayList<>();
+        playerList = new ArrayList<Player>();
         try (BufferedReader bReader = new BufferedReader(new FileReader("players.txt"))) {
             String line;
-            while ((line = bReader.readLine())!= null) {
-               String[] fields = line.split(" "); // assuming tab-delimited fields
+            while ((line = bReader.readLine())!= null) 
+            {
+                String[] fields = line.split(",");
                 String name = fields[0];
-                Colour colour = Colour.valueOf(fields[1]);
-                int score = Integer.parseInt(fields[2]);
-                int wins = Integer.parseInt(fields[3]);
-                int losses = Integer.parseInt(fields[4]);
-                Player player = new Player(name, colour);
+                int score = Integer.parseInt(fields[1]);
+                int wins = Integer.parseInt(fields[2]);
+                int losses = Integer.parseInt(fields[3]);
+                Player player = new Player(name);
                 player.score = score;
                 player.wins = wins;
                 player.losses = losses;
@@ -85,30 +93,35 @@ public class Player {
         {
             if (player.name.equals(name)) 
             {
-            return player;
+                return player;
             }
         }
         
         return null;
     }
     public static void updateFile()
-    {
-           
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("players.txt"))) 
+    {       
+        try (FileWriter fw = new FileWriter("players.txt", false)) 
         {
-        for (Player player : playerList) {
-            //Player's name, colour, score, wins, and losses to the file
-            writer.write(player.name + "," + player.colour.toString() + "," + player.score + "," + player.wins + "," + player.losses + "\n");
-        }
+            String str = "";
+            for (Player player : playerList) 
+            {
+                str += player.name + "," + player.score + "," + player.wins + "," + player.losses + "\n";
+                //Player's name, score, wins, and losses to the file
+            }
+            
+            fw.write(str);
+            fw.close();
+            
         } catch (IOException e) {
-        System.out.println("An error occurred while writing the players to the file: " + e.getMessage());
+            System.out.println("An error occurred while writing the players to the file: " + e.getMessage());
         }
 
     }
     
     public String getWinLossString()
     {
-    return "Wins: " + this.wins + ", Losses: " + this.losses;
+        return "Wins: " + this.wins + ", Losses: " + this.losses + " Total Captures: " + this.score;
     }
     
     public Colour getColour() {

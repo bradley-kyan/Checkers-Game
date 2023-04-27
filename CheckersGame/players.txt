@@ -1,1 +1,2 @@
-Kishan RED 100 1 99
+Kishan,1,1,0
+Kyan,1,1,1

@@ -68,21 +68,26 @@ public class CheckersGame {
         Player playerBlack = new Player(nameBlack, Colour.BLACK);
         
         while(true)
-{
-    int currentRed = board.remainingPieces(Colour.RED);
-    int currentBlack = board.remainingPieces(Colour.BLACK);
+        {
+            int currentRed = board.remainingPieces(Colour.RED);
+            int currentBlack = board.remainingPieces(Colour.BLACK);
+
+            if(currentRed == 0 || currentBlack == 0)
+                break;
+
+            while(!playTurn(playerRed));
+            if(currentBlack != board.remainingPieces(Colour.BLACK))
+                playerRed.capture();
+            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+                break;
             
-    if(currentRed == 0 || currentBlack == 0)
-        break;
-            
-    while(!playTurn(playerRed));
-    if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
-        break;
-                
-    while(!playTurn(playerBlack));
-    if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
-        break;
-}       
+            while(!playTurn(playerBlack));
+            if(currentRed != board.remainingPieces(Colour.RED))
+                playerBlack.capture();
+            if(board.remainingPieces(Colour.BLACK) == 0 || board.remainingPieces(Colour.RED) == 0)
+                break;
+        }       
+        
         if(board.remainingPieces(Colour.BLACK) > board.remainingPieces(Colour.RED))
             playerBlack.win();
         else
@@ -94,6 +99,7 @@ public class CheckersGame {
         
         
     }
+    
     private static boolean playTurn(Player currentPlayer)
     {
         board.updateMoves();
@@ -135,6 +141,7 @@ public class CheckersGame {
         
         return true;
     }
+    
     private static String getTitle(String userName1, String userName2) {
         return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
                 + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
