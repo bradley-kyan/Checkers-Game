@@ -157,5 +157,6 @@ public class Player {
         Player player = playerList.get(i);
         System.out.println((i+1) + ". " + player.name +" "+player.getWinLossString());
     }
+        System.out.println("\n");
 }
 }
