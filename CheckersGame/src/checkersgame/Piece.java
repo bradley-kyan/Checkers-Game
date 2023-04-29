@@ -19,10 +19,10 @@ public class Piece {
     public Character hintIdentifier;
     
     /**
-     * 
-     * @param colour
-     * @param rank
-     * @param pos 
+     * initializes piece and creates the IDs for the pieces in increase numbers
+     * @param colour the colour of the piece
+     * @param rank the rank of the piece (king,pawn)
+     * @param pos the initial position of the piece
      */
     public Piece(Colour colour, Rank rank, Point pos)
     {
