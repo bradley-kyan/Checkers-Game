@@ -13,8 +13,8 @@ public class Board
     protected int dimension;
     
     /**
-     * 
-     * @param size 
+     * Initializes a new checkers board, and populates each side's pieces. 
+     * @param size Number of squares the board will have in both an x and y axis
      */
     public Board(int size)
     {
@@ -23,8 +23,8 @@ public class Board
     }
     
     /**
-     * 
-     * @param dimension 
+     * Populates the board with the correct placement and number of pieces.
+     * @param dimension Size of the board
      */
     private void populateBoard(int dimension)
     {
@@ -82,9 +82,9 @@ public class Board
     }
     
     /**
-     * 
-     * @param ID
-     * @return 
+     * Finds a piece that is on the board which has the input ID
+     * @param ID ID of a piece
+     * @return Piece object or null if no matching ID
      */
     public Piece getPiece(int ID)
     {
@@ -101,9 +101,9 @@ public class Board
     }
       
     /**
-     * 
-     * @param point
-     * @return 
+     * Checks piece list and gets the Piece that is in the same Point location.
+     * @param point Board location
+     * @return Piece object or null if no piece is found at specified location
      */
     public Piece getPiece(Point point)
     {
@@ -116,8 +116,8 @@ public class Board
     }
 
     /**
-     * 
-     * @return 
+     * Gets the ArrayList of pieces.
+     * @return ArrayList<Piece> of all alive pieces
      */
     public ArrayList<Piece> getPieces()
     {
@@ -125,9 +125,12 @@ public class Board
     }
     
     /**
-     * 
-     * @param piece
-     * @param location 
+     * Moves a specified piece to a new location. Location must be valid. Valid moves
+     * are defined in piece's move list (LinkedPoint). If valid move, will update 
+     * piece position and remove all pre-calculated to be removed pieces.
+     * @param piece Piece to be moved
+     * @param location New location of piece
+     * @see LinkedPoint.java
      */
     public void movePiece(Piece piece, Point location)
     {
@@ -152,6 +155,7 @@ public class Board
      * @param directionalMoves
      * @param origin
      * @return 
+     * @see getMoves()
      */
     public ArrayList<LinkedPoint> filterMoves(ArrayList<ArrayList<Point>> directionalMoves, Piece origin)
     {     
