@@ -25,6 +25,17 @@ public class Player {
     private int losses; //Total losses
     private static ArrayList<Player> playerList; //PlayerList should be shared across all player objects
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * This is a constructor method for the Player class that creates a new Player object.
+     * The method checks if there is already a player in the system with the same name.
+     * If there is, it retrieves that player's existing statistics and assigns them to the new player object. 
+     * If not, the method initializes the new player with default statistics.
+     * @param name The user name of the player
+     * @param colour The colour the player is playing as.
+     */
+>>>>>>> Stashed changes
     public Player(String name, Colour colour) {
         if(playerList == null)
             getPlayers();
@@ -49,11 +60,26 @@ public class Player {
         }
         
     }
+<<<<<<< Updated upstream
+=======
+    
+    /**
+     * Inititalises the player name
+     * @param name The name of the player
+     */
+>>>>>>> Stashed changes
     private Player(String name)
     {
         this.name = name;
     }
     
+<<<<<<< Updated upstream
+=======
+    /**
+     * Updates the information of an existing player.
+     * @param p a new  player object
+     */
+>>>>>>> Stashed changes
     private void parsePlayer(Player p)
     {
         this.name = p.name;
@@ -62,6 +88,12 @@ public class Player {
         this.losses = p.losses;
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * Reads player data from a  text file and creates player object based on that information.
+     */
+>>>>>>> Stashed changes
     public static void getPlayers() {
         if (playerList != null) {
             return; // don't load players if already loaded
@@ -87,6 +119,15 @@ public class Player {
             
         }
     }
+<<<<<<< Updated upstream
+=======
+    
+    /**
+     * Iterates through an arraylist of players and checks for a specified player.
+     * @param name the name  of the player that we want returned
+     * @return player if player name is found else returns null if player name isnt found
+     */
+>>>>>>> Stashed changes
     public Player getPlayer(String name)
     {
         for (Player player : playerList) 
@@ -99,6 +140,14 @@ public class Player {
         
         return null;
     }
+<<<<<<< Updated upstream
+=======
+    
+    /**
+     * Updates the text file with any new data that is present within the array list 
+     * which is not already in the text file
+     */
+>>>>>>> Stashed changes
     public static void updateFile()
     {       
         try (FileWriter fw = new FileWriter("players.txt", false)) 
@@ -118,7 +167,10 @@ public class Player {
         }
 
     }
-    
+    /*
+    *Generates a string which depicts a players wins losses and  total pieces captured
+    * @return a string with the players wins losses and score.
+    */
     public String getWinLossString()
     {
         return "Wins: " + this.wins + ", Losses: " + this.losses + " Total Captures: " + this.score;
@@ -152,7 +204,9 @@ public class Player {
     {
         return this.losses;
     }
-    
+    /*
+    * Creates a leaderboard with all players  names  and data such as wins losses and score.
+    */
     public static void displayLeaderboard() {
     if(playerList == null)
         getPlayers();
