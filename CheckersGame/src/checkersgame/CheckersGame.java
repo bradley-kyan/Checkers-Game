@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author bradl
+ * @author kishanyugendran
  */
 public class CheckersGame {
 
