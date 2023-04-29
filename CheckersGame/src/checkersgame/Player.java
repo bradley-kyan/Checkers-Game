@@ -26,9 +26,12 @@ public class Player {
     private static ArrayList<Player> playerList; //PlayerList should be shared across all player objects
 
     /**
-     * 
-     * @param name
-     * @param colour 
+     * This is a constructor method for the Player class that creates a new Player object.
+     * The method checks if there is already a player in the system with the same name.
+     * If there is, it retrieves that player's existing statistics and assigns them to the new player object. 
+     * If not, the method initializes the new player with default statistics.
+     * @param name The user name of the player
+     * @param colour The colour the player is playing as.
      */
     public Player(String name, Colour colour) {
         if(playerList == null)
@@ -54,19 +57,19 @@ public class Player {
         }
         
     }
-    
+   
     /**
-     * 
-     * @param name 
+     * Inititalises the player name
+     * @param name The name of the player
      */
     private Player(String name)
     {
         this.name = name;
     }
-    
+
     /**
-     * 
-     * @param p 
+     * Updates the information of an existing player.
+     * @param p a new  player object
      */
     private void parsePlayer(Player p)
     {
@@ -77,7 +80,7 @@ public class Player {
     }
 
     /**
-     * 
+     * Reads player data from a  text file and creates player object based on that information.
      */
     public static void getPlayers() {
         if (playerList != null) {
@@ -104,11 +107,11 @@ public class Player {
             
         }
     }
-    
+
     /**
-     * 
-     * @param name
-     * @return 
+     * Iterates through an arraylist of players and checks for a specified player.
+     * @param name the name  of the player that we want returned
+     * @return player if player name is found else returns null if player name isnt found
      */
     public Player getPlayer(String name)
     {
@@ -122,9 +125,10 @@ public class Player {
         
         return null;
     }
-    
+
     /**
-     * 
+     * Updates the text file with any new data that is present within the array list 
+     * which is not already in the text file
      */
     public static void updateFile()
     {       
@@ -146,6 +150,10 @@ public class Player {
 
     }
     
+    /*
+    *Generates a string which depicts a players wins losses and  total pieces captured
+    * @return a string with the players wins losses and score.
+    */
     public String getWinLossString()
     {
         return "Wins: " + this.wins + ", Losses: " + this.losses + " Total Captures: " + this.score;
@@ -179,7 +187,9 @@ public class Player {
     {
         return this.losses;
     }
-    
+    /*
+    * Creates a leaderboard with all players  names  and data such as wins losses and score.
+    */
     public static void displayLeaderboard() {
     if(playerList == null)
         getPlayers();
