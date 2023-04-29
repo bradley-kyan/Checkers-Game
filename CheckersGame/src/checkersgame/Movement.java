@@ -1,7 +1,8 @@
 package checkersgame;
 
 /**
- * @author bradl
+ * @author kishanyugendran
+ * @deprecated   
  */
 public enum Movement {
     FORWARD( 1),

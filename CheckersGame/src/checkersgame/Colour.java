@@ -1,7 +1,7 @@
 package checkersgame;
 
 /**
- * @author bradl
+ * @author kishanyugendran
  */
 public enum Colour {
     RED,
