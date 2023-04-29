@@ -151,10 +151,12 @@ public class Board
     }
     
     /**
-     * 
-     * @param directionalMoves
-     * @param origin
-     * @return 
+     * Filters out the potential moves from the inputted moves. Filtered moves
+     * are moved which a piece can move to. It calculates moved based on if there
+     * is a piece in its move location, or if it can capture the opponent's piece
+     * @param directionalMoves Pre-calculated potential moves on the diagonal axis.
+     * @param origin Piece which movements are for.
+     * @return ArrayList<LinkedPoint> containing all valid moves a piece can move.
      * @see getMoves()
      */
     public ArrayList<LinkedPoint> filterMoves(ArrayList<ArrayList<Point>> directionalMoves, Piece origin)
@@ -220,9 +222,9 @@ public class Board
     }  
     
     /**
-     * 
-     * @param colour
-     * @return 
+     * Gets the total number of pieces a colour has on the board.
+     * @param colour Colour to check
+     * @return int of remaining pieces
      */
     public int remainingPieces(Colour colour)
     {
@@ -240,9 +242,9 @@ public class Board
     }
     
     /**
-     * 
-     * @param origin
-     * @return 
+     * Gets all the moves which a piece can legally move to.
+     * @param origin Piece which movements are for. 
+     * @return ArrayList<LinkedPoint> containing moves a piece can move to.
      */
     private ArrayList<LinkedPoint> getMoves(Point origin)
     {
@@ -250,9 +252,11 @@ public class Board
     }
     
     /**
-     * 
-     * @param p
-     * @return 
+     * Gets all points that are diagonal to input point. 
+     * @param p Point on the board
+     * @return Multidimensional ArrayList of points in both negative, and positive
+     * diagonal directions to given point.
+     * @see getMoves()
      */
     private ArrayList<ArrayList<Point>> potentialMoves(Point p)
     {
