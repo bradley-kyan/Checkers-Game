@@ -13,11 +13,20 @@ import java.util.ArrayList;
  */
 public class DrawBoard extends Board{
     
+    /**
+     * 
+     * @param dimension 
+     */
     public DrawBoard(int dimension)
     {
         super(dimension);
     }
     
+    /**
+     * 
+     * @param currentTurn
+     * @return 
+     */
     public Piece[][] drawPieces(Colour currentTurn)
     {
         this.clearScreen();
@@ -70,6 +79,12 @@ public class DrawBoard extends Board{
         return boardFrame;
     }
     
+    /**
+     * 
+     * @param currentTurn
+     * @param ID
+     * @return 
+     */
     public Piece[][] drawHint(Colour currentTurn, int ID)
     {
         this.clearScreen();
@@ -133,6 +148,9 @@ public class DrawBoard extends Board{
         return boardFrame;
     }
     
+    /**
+     * 
+     */
     private void clearScreen()
     {
         for(int i = 0; i < 100 + super.dimension; i++)
@@ -141,6 +159,13 @@ public class DrawBoard extends Board{
         }
     }
     
+    /**
+     * 
+     * @param c
+     * @param boardFrame
+     * @param ID
+     * @return 
+     */
     public boolean chooseHint(Character c, Piece[][] boardFrame, int ID)
     {
         for (int y = boardFrame.length - 1; y >= 0; y--)
@@ -164,6 +189,12 @@ public class DrawBoard extends Board{
         return false;
     }
     
+    /**
+     * 
+     * @param id
+     * @param lines
+     * @return 
+     */
     public String[] drawRed(int id, String[] lines)
     {
         if(id > 9)
@@ -188,6 +219,12 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * 
+     * @param id
+     * @param lines
+     * @return 
+     */
     public String[] drawBlack(int id, String[] lines)
     {
         if(id > 9)
@@ -212,6 +249,11 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * 
+     * @param lines
+     * @return 
+     */
     private String[] drawSpace(String[] lines)
     {        
         lines[0] += " ------------- ";
@@ -224,6 +266,12 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * 
+     * @param selection
+     * @param lines
+     * @return 
+     */
     private String[] drawHint(char selection, String[] lines)
     {        
         lines[0] += " ------------- ";

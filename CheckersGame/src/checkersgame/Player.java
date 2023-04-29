@@ -25,6 +25,11 @@ public class Player {
     private int losses; //Total losses
     private static ArrayList<Player> playerList; //PlayerList should be shared across all player objects
 
+    /**
+     * 
+     * @param name
+     * @param colour 
+     */
     public Player(String name, Colour colour) {
         if(playerList == null)
             getPlayers();
@@ -49,11 +54,20 @@ public class Player {
         }
         
     }
+    
+    /**
+     * 
+     * @param name 
+     */
     private Player(String name)
     {
         this.name = name;
     }
     
+    /**
+     * 
+     * @param p 
+     */
     private void parsePlayer(Player p)
     {
         this.name = p.name;
@@ -62,6 +76,9 @@ public class Player {
         this.losses = p.losses;
     }
 
+    /**
+     * 
+     */
     public static void getPlayers() {
         if (playerList != null) {
             return; // don't load players if already loaded
@@ -87,6 +104,12 @@ public class Player {
             
         }
     }
+    
+    /**
+     * 
+     * @param name
+     * @return 
+     */
     public Player getPlayer(String name)
     {
         for (Player player : playerList) 
@@ -99,6 +122,10 @@ public class Player {
         
         return null;
     }
+    
+    /**
+     * 
+     */
     public static void updateFile()
     {       
         try (FileWriter fw = new FileWriter("players.txt", false)) 
@@ -170,5 +197,5 @@ public class Player {
         Player player = playerList.get(i);
         System.out.println((i+1) + ". " + player.name +" "+player.getWinLossString());
     }
-}
+    }
 }

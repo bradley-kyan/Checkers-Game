@@ -12,12 +12,20 @@ public class Board
     public ArrayList<Piece> pieces;
     protected int dimension;
     
+    /**
+     * 
+     * @param size 
+     */
     public Board(int size)
     {
         this.dimension = size;
         populateBoard(size);
     }
     
+    /**
+     * 
+     * @param dimension 
+     */
     private void populateBoard(int dimension)
     {
         this.pieces = new ArrayList<Piece>();
@@ -62,6 +70,9 @@ public class Board
         }      
     }
     
+    /**
+     * 
+     */
     public void updateMoves()
     {
         for(Piece p : pieces)
@@ -70,6 +81,11 @@ public class Board
         }
     }
     
+    /**
+     * 
+     * @param ID
+     * @return 
+     */
     public Piece getPiece(int ID)
     {
         Iterator it = this.pieces.iterator();
@@ -83,7 +99,12 @@ public class Board
         }
         return null; 
     }
-        
+      
+    /**
+     * 
+     * @param point
+     * @return 
+     */
     public Piece getPiece(Point point)
     {
         for(Piece p : pieces)
@@ -94,11 +115,20 @@ public class Board
         return null; 
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<Piece> getPieces()
     {
         return this.pieces;
     }
     
+    /**
+     * 
+     * @param piece
+     * @param location 
+     */
     public void movePiece(Piece piece, Point location)
     {
         ArrayList<LinkedPoint> points = piece.moves;
@@ -117,6 +147,12 @@ public class Board
         this.updateMoves();
     }
     
+    /**
+     * 
+     * @param directionalMoves
+     * @param origin
+     * @return 
+     */
     public ArrayList<LinkedPoint> filterMoves(ArrayList<ArrayList<Point>> directionalMoves, Piece origin)
     {     
         ArrayList<LinkedPoint> filtered = new ArrayList<LinkedPoint>();
@@ -179,6 +215,11 @@ public class Board
         return filtered;
     }  
     
+    /**
+     * 
+     * @param colour
+     * @return 
+     */
     public int remainingPieces(Colour colour)
     {
         int count = 0;
@@ -194,11 +235,21 @@ public class Board
         return count;
     }
     
+    /**
+     * 
+     * @param origin
+     * @return 
+     */
     private ArrayList<LinkedPoint> getMoves(Point origin)
     {
         return this.filterMoves(this.potentialMoves(origin), this.getPiece(origin));
     }
     
+    /**
+     * 
+     * @param p
+     * @return 
+     */
     private ArrayList<ArrayList<Point>> potentialMoves(Point p)
     {
         ArrayList<ArrayList<Point>> directionalMoves = new ArrayList<ArrayList<Point>>();

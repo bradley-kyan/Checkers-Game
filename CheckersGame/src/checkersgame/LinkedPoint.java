@@ -17,9 +17,11 @@ public class LinkedPoint {
     public Piece origin;
     public ArrayList<Point> toBeRemoved;
     
+    /**
+     * 
+     */
     public LinkedPoint()
     {
         this.toBeRemoved = new ArrayList<Point>();
-    }
-    
+    }  
 }

@@ -24,6 +24,9 @@ public class CheckersGame {
         runGame();
     }
     
+    /**
+     * 
+     */
     public static void runGame()
     {
         
@@ -100,6 +103,11 @@ public class CheckersGame {
         
     }
     
+    /**
+     * 
+     * @param currentPlayer
+     * @return 
+     */
     private static boolean playTurn(Player currentPlayer)
     {
         board.updateMoves();
@@ -142,6 +150,12 @@ public class CheckersGame {
         return true;
     }
 
+    /**
+     * 
+     * @param userName1
+     * @param userName2
+     * @return 
+     */
     private static String getTitle(String userName1, String userName2) {
         return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
                 + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"
