@@ -13,11 +13,22 @@ import java.util.ArrayList;
  */
 public class DrawBoard extends Board{
     
+    /**
+     * Initializes a new checkers board, and populates each side's pieces. 
+     * @param size Number of squares the board will have in both an x and y axis
+     * @see Board.java
+     */
     public DrawBoard(int dimension)
     {
         super(dimension);
     }
     
+    /**
+     * Draws the all the alive pieces to the screen line by line
+     * @param currentTurn The colour of the current player's turn
+     * @return Multidimensional Piece[][] array with all the alive pieces which
+     * mimics the board's actual dimensions. AKA the board's frame
+     */
     public Piece[][] drawPieces(Colour currentTurn)
     {
         this.clearScreen();
@@ -70,6 +81,13 @@ public class DrawBoard extends Board{
         return boardFrame;
     }
     
+    /**
+     * Draws to the screen a selected piece's valid moves.
+     * @param currentTurn The colour of the current player's turn
+     * @param ID ID of the piece to show moves
+     * @return Multidimensional Piece[][] array with all the alive pieces which
+     * mimics the board's actual dimensions. AKA the board's frame
+     */
     public Piece[][] drawHint(Colour currentTurn, int ID)
     {
         this.clearScreen();
@@ -133,6 +151,10 @@ public class DrawBoard extends Board{
         return boardFrame;
     }
     
+    /**
+     * Clear's the user's screen by printing a bunch of lines. Mimics a console 
+     * clear command.
+     */
     private void clearScreen()
     {
         for(int i = 0; i < 100 + super.dimension; i++)
@@ -141,6 +163,14 @@ public class DrawBoard extends Board{
         }
     }
     
+    /**
+     * Selects a piece's valid move to move to.
+     * @param c Move hint character
+     * @param boardFrame Piece[][] array of all the board's pieces
+     * @param ID ID of the piece to be moved
+     * @return Boolean - True if valid character is inputted, and move was successful. 
+     * False if piece was not moved.
+     */
     public boolean chooseHint(Character c, Piece[][] boardFrame, int ID)
     {
         for (int y = boardFrame.length - 1; y >= 0; y--)
@@ -164,6 +194,12 @@ public class DrawBoard extends Board{
         return false;
     }
     
+    /**
+     * Generates a red piece. Adds it to the buffer of lines for a row.
+     * @param id The ID of the piece for selection
+     * @param lines String[] array of the current row buffer.
+     * @return String[] of row buffer.
+     */
     public String[] drawRed(int id, String[] lines)
     {
         if(id > 9)
@@ -188,6 +224,12 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * Generates a black piece. Adds it to the buffer of lines for a row.
+     * @param id The ID of the piece for selection
+     * @param lines String[] array of the current row buffer.
+     * @return String[] of row buffer.
+     */
     public String[] drawBlack(int id, String[] lines)
     {
         if(id > 9)
@@ -212,6 +254,11 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * Generates an empty space. Adds it to the buffer of lines for a row.
+     * @param lines String[] array of the current row buffer.
+     * @return String[] of row buffer.
+     */
     private String[] drawSpace(String[] lines)
     {        
         lines[0] += " ------------- ";
@@ -224,6 +271,12 @@ public class DrawBoard extends Board{
         return lines;
     }
     
+    /**
+     * Generates a hint selection for a piece. Adds it to the buffer of lines for a row.
+     * @param selection Char of the character to be the identifier for the move
+     * @param lines String[] array of the current row buffer.
+     * @return String[] of row buffer.
+     */
     private String[] drawHint(char selection, String[] lines)
     {        
         lines[0] += " ------------- ";

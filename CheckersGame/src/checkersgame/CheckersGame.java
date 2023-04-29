@@ -24,13 +24,10 @@ public class CheckersGame {
         runGame();
     }
     
-<<<<<<< Updated upstream
-=======
     /**
      * This method runs the checkers game by calling functions from multiple classes. This also displays some generic messages
      * such as requests for username and board size.
      */
->>>>>>> Stashed changes
     public static void runGame()
     {
         
@@ -106,16 +103,13 @@ public class CheckersGame {
         
         
     }
-    
-<<<<<<< Updated upstream
-=======
+
     /**
      * The method allows the player to take their turn and ends their turn when they move their piece.
      * @param currentPlayer represents the current player which is taking a turn
      * @return true if the player made a valid move and their turn ended, false if the player
      * made an invalid move or decided to go back to selecting a different piece, and the turn has not been completed. 
      */
->>>>>>> Stashed changes
     private static boolean playTurn(Player currentPlayer)
     {
         board.updateMoves();
@@ -157,9 +151,6 @@ public class CheckersGame {
         
         return true;
     }
-<<<<<<< Updated upstream
-    
-=======
 
     /**
      * Generates an ASCII title along with a welcome message with player names
@@ -167,7 +158,6 @@ public class CheckersGame {
      * @param userName2 Name of the second player
      * @return an ASCII art of the word 'checkers' along with a welcome message with users' names.
      */
->>>>>>> Stashed changes
     private static String getTitle(String userName1, String userName2) {
         return (" ________  ___  ___  _______   ________  ___  __    _______   ________  ________      \n"
                 + "|\\   ____\\|\\  \\|\\  \\|\\  ___ \\ |\\   ____\\|\\  \\|\\  \\ |\\  ___ \\ |\\   __  \\|\\   ____\\     \n"

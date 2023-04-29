@@ -12,12 +12,20 @@ public class Board
     public ArrayList<Piece> pieces;
     protected int dimension;
     
+    /**
+     * Initializes a new checkers board, and populates each side's pieces. 
+     * @param size Number of squares the board will have in both an x and y axis
+     */
     public Board(int size)
     {
         this.dimension = size;
         populateBoard(size);
     }
     
+    /**
+     * Populates the board with the correct placement and number of pieces.
+     * @param dimension Size of the board
+     */
     private void populateBoard(int dimension)
     {
         this.pieces = new ArrayList<Piece>();
@@ -62,6 +70,9 @@ public class Board
         }      
     }
     
+    /**
+     * 
+     */
     public void updateMoves()
     {
         for(Piece p : pieces)
@@ -70,6 +81,11 @@ public class Board
         }
     }
     
+    /**
+     * Finds a piece that is on the board which has the input ID
+     * @param ID ID of a piece
+     * @return Piece object or null if no matching ID
+     */
     public Piece getPiece(int ID)
     {
         Iterator it = this.pieces.iterator();
@@ -83,7 +99,12 @@ public class Board
         }
         return null; 
     }
-        
+      
+    /**
+     * Checks piece list and gets the Piece that is in the same Point location.
+     * @param point Board location
+     * @return Piece object or null if no piece is found at specified location
+     */
     public Piece getPiece(Point point)
     {
         for(Piece p : pieces)
@@ -94,11 +115,23 @@ public class Board
         return null; 
     }
 
+    /**
+     * Gets the ArrayList of pieces.
+     * @return ArrayList<Piece> of all alive pieces
+     */
     public ArrayList<Piece> getPieces()
     {
         return this.pieces;
     }
     
+    /**
+     * Moves a specified piece to a new location. Location must be valid. Valid moves
+     * are defined in piece's move list (LinkedPoint). If valid move, will update 
+     * piece position and remove all pre-calculated to be removed pieces.
+     * @param piece Piece to be moved
+     * @param location New location of piece
+     * @see LinkedPoint.java
+     */
     public void movePiece(Piece piece, Point location)
     {
         ArrayList<LinkedPoint> points = piece.moves;
@@ -117,6 +150,15 @@ public class Board
         this.updateMoves();
     }
     
+    /**
+     * Filters out the potential moves from the inputted moves. Filtered moves
+     * are moved which a piece can move to. It calculates moved based on if there
+     * is a piece in its move location, or if it can capture the opponent's piece
+     * @param directionalMoves Pre-calculated potential moves on the diagonal axis.
+     * @param origin Piece which movements are for.
+     * @return ArrayList<LinkedPoint> containing all valid moves a piece can move.
+     * @see getMoves()
+     */
     public ArrayList<LinkedPoint> filterMoves(ArrayList<ArrayList<Point>> directionalMoves, Piece origin)
     {     
         ArrayList<LinkedPoint> filtered = new ArrayList<LinkedPoint>();
@@ -179,6 +221,11 @@ public class Board
         return filtered;
     }  
     
+    /**
+     * Gets the total number of pieces a colour has on the board.
+     * @param colour Colour to check
+     * @return int of remaining pieces
+     */
     public int remainingPieces(Colour colour)
     {
         int count = 0;
@@ -194,11 +241,23 @@ public class Board
         return count;
     }
     
+    /**
+     * Gets all the moves which a piece can legally move to.
+     * @param origin Piece which movements are for. 
+     * @return ArrayList<LinkedPoint> containing moves a piece can move to.
+     */
     private ArrayList<LinkedPoint> getMoves(Point origin)
     {
         return this.filterMoves(this.potentialMoves(origin), this.getPiece(origin));
     }
     
+    /**
+     * Gets all points that are diagonal to input point. 
+     * @param p Point on the board
+     * @return Multidimensional ArrayList of points in both negative, and positive
+     * diagonal directions to given point.
+     * @see getMoves()
+     */
     private ArrayList<ArrayList<Point>> potentialMoves(Point p)
     {
         ArrayList<ArrayList<Point>> directionalMoves = new ArrayList<ArrayList<Point>>();

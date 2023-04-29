@@ -18,6 +18,12 @@ public class Piece {
     
     public Character hintIdentifier;
     
+    /**
+     * 
+     * @param colour
+     * @param rank
+     * @param pos 
+     */
     public Piece(Colour colour, Rank rank, Point pos)
     {
         this.colour = colour;
@@ -72,6 +78,5 @@ public class Piece {
     public void setPos(Point pos)
     {
         this.position = pos;
-    }
-    
+    }   
 }

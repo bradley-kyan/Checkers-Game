@@ -1,2 +1,3 @@
 Kishan,1,1,0
-Kyan,1,1,1
+Kyan,13,2,1
+Isaac,7,0,0
