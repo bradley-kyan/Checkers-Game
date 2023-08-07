@@ -25,7 +25,8 @@ public class CheckersGame {
     }
     
     /**
-     * This method runs the checkers game by calling functions from multiple classes. This also displays some generic messages
+     * This method runs the checkers game by calling functions from multiple classes.
+     * This also displays some generic messages
      * such as requests for username and board size.
      */
     public static void runGame()
